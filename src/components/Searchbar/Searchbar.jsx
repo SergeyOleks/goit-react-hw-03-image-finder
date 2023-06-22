@@ -7,7 +7,6 @@ import { fetchFindResult } from './fetchFindResult';
 import { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-
 class Searchbar extends Component {
   state = {
     name: '',
@@ -16,6 +15,7 @@ class Searchbar extends Component {
     page: 1,
     showModal: false,
     modalPic: false,
+    pageFlag: true,
   };
 
   toggleModal = event => {
@@ -32,29 +32,41 @@ class Searchbar extends Component {
 
   handleSubmit = async event => {
     const { name, page } = this.state;
+    if (name.trim() === '') {
+      return;
+    }
     event.preventDefault();
     this.setState({ loading: true });
     const resp = await fetchFindResult(name, page);
     const { data } = resp;
 
     setTimeout(() => {
-    this.setState({
-      loading: false,
-      data: data,
-    });
-
+      this.setState({
+        loading: false,
+        data: data,
+      });
     }, 1000);
-
   };
 
   handlePageIncreace = async () => {
-    let { page, name } = this.state;
+    let { page, name, pageFlag } = this.state;
     page = page + 1;
 
-    console.log(page);
     const resp = await fetchFindResult(name, page);
     const { data } = resp;
+
+    data.hits = this.state.data.hits.concat(data.hits);
+
+    console.log('page', page);
+    console.log(data);
+
+    if (page * 12 >= this.state.data.totalHits) {
+      console.log(pageFlag);
+      pageFlag = false;
+    }
+
     this.setState({
+      pageFlag:pageFlag,
       loading: false,
       data: data,
       page: page,
@@ -66,7 +78,7 @@ class Searchbar extends Component {
   };
 
   render() {
-    const { name, loading, data, showModal, modalPic } = this.state;
+    const { name, loading, data, showModal, modalPic, pageFlag } = this.state;
 
     return (
       <>
@@ -89,7 +101,7 @@ class Searchbar extends Component {
         </header>
         {loading && <Loader />}
         <ImageGallery data={data.hits} onClick={this.toggleModal} />
-        {data && <Button onClick={this.handlePageIncreace} />}
+        {data && pageFlag && <Button onClick={this.handlePageIncreace} />}
         {showModal && <Modal onClose={this.toggleModal} picture={modalPic} />}
       </>
     );
