@@ -31,14 +31,27 @@ class Searchbar extends Component {
   };
 
   handleSubmit = async event => {
-    const { name, page } = this.state;
+    const { name, page, loading, pageFlag } = this.state;
+    event.preventDefault();
+    this.setState({ loading: true });
+
     if (name.trim() === '') {
       return;
     }
-    event.preventDefault();
-    this.setState({ loading: true });
+
     const resp = await fetchFindResult(name, page);
     const { data } = resp;
+
+    if (!data || data['hits'].length === 0) {
+
+      this.setState({
+        data: false,
+        loading: false,
+        pageFlag: false,
+      });
+
+      return;
+    }
 
     setTimeout(() => {
       this.setState({
@@ -66,7 +79,7 @@ class Searchbar extends Component {
     }
 
     this.setState({
-      pageFlag:pageFlag,
+      pageFlag: pageFlag,
       loading: false,
       data: data,
       page: page,
