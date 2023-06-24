@@ -31,7 +31,7 @@ class Searchbar extends Component {
   };
 
   handleSubmit = async event => {
-    const { name, page, loading, pageFlag } = this.state;
+    const { name, page } = this.state;
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -43,7 +43,6 @@ class Searchbar extends Component {
     const { data } = resp;
 
     if (!data || data['hits'].length === 0) {
-
       this.setState({
         data: false,
         loading: false,
