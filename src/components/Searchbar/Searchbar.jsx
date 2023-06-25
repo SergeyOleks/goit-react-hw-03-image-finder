@@ -46,8 +46,6 @@ class Searchbar extends Component {
     const resp = await fetchFindResult(name, page);
     const { data } = resp;
 
-    console.log(data);
-
     if (!data || data['hits'].length === 0) {
       this.setState({
         data: false,

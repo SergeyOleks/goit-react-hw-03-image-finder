@@ -1,6 +1,7 @@
 import css from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -38,4 +39,8 @@ export default class Modal extends Component {
       modalRoot
     );
   }
+}
+
+Modal.propTypes= {
+  picture: PropTypes.string,
 }
