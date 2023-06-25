@@ -19,7 +19,6 @@ class Searchbar extends Component {
   };
 
   toggleModal = event => {
-    const { showModal } = this.state;
 
     if (event) {
       const { src } = event.target;
