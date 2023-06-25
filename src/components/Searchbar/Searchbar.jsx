@@ -7,7 +7,7 @@ import { fetchFindResult } from './fetchFindResult';
 import { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-class Searchbar extends Component {
+export default class Searchbar extends Component {
   state = {
     name: '',
     loading: false,
@@ -19,7 +19,6 @@ class Searchbar extends Component {
   };
 
   toggleModal = event => {
-
     if (event) {
       const { src } = event.target;
       const { data } = this.state;
@@ -125,5 +124,3 @@ class Searchbar extends Component {
     );
   }
 }
-
-export default Searchbar;
