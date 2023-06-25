@@ -5,11 +5,11 @@ import { nanoid } from 'nanoid';
 const ImageGallery = ({ data, onClick }) => {
   return (
     data && (
-      <ul className={css.imageGallery} onClick={onClick}>
+      <ul className={css.imageGallery}>
         {data.map(({ webformatURL, user }) => {
           const id = nanoid();
           return (
-            <li key={id} className={css.gallery__item}>
+            <li key={id} className={css.gallery__item} onClick={onClick}>
               <ImageGalleryItem webformatURL={webformatURL} user={user} />
             </li>
           );

@@ -19,6 +19,8 @@ class Searchbar extends Component {
   };
 
   toggleModal = event => {
+    const { showModal } = this.state;
+
     if (event) {
       const { src } = event.target;
       const { data } = this.state;
@@ -78,11 +80,7 @@ class Searchbar extends Component {
 
     data.hits = this.state.data.hits.concat(data.hits);
 
-    console.log('page', page);
-    console.log(data);
-
     if (page * 12 >= this.state.data.totalHits) {
-      console.log(pageFlag);
       pageFlag = false;
     }
 
